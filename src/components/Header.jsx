@@ -12,10 +12,7 @@ const Header = () => {
   return (
     <div className='header'>
       <div className='header__left'>
-        <img
-          src='https://cdn-icons.flaticon.com/png/512/3536/premium/3536505.png?token=exp=1655315682~hmac=b0e84a52b0025a084266e2e8b337dbdf'
-          alt='logo'
-        />
+        <img src='' alt='logo' />
 
         <div className='header__search'>
           <SearchIcon />
