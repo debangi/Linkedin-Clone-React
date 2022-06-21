@@ -16,7 +16,7 @@ const Header = () => {
 
         <div className='header__search'>
           <SearchIcon />
-          <input type='text' />
+          <input type='text' placeholder='Search' />
         </div>
       </div>
       <div className='header__right'>
@@ -25,10 +25,7 @@ const Header = () => {
         <HeaderOption title='Jobs' Icon={BusinessCenterIcon} />
         <HeaderOption title='Messaging' Icon={ChatIcon} />
         <HeaderOption title='Notifications' Icon={NotificationsIcon} />
-        <HeaderOption
-          avatar='https://drive.google.com/file/d/1jOCZH1SBIIgUdLb3NjcMZ0L7mBaDTfDc/view?usp=sharing'
-          title='me'
-        />
+        <HeaderOption avatar='' title='me' />
       </div>
     </div>
   );
