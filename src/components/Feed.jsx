@@ -1,4 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import firebase from 'firebase/compat/app';
+import {
+  collection,
+  onSnapshot,
+  setDoc,
+  doc,
+  orderBy,
+  query,
+} from 'firebase/firestore';
+import { db } from '../firebase-config';
 import CreateIcon from '@mui/icons-material/Create';
 import ImageIcon from '@mui/icons-material/Image';
 import EventNoteIcon from '@mui/icons-material/EventNote';
@@ -10,9 +20,28 @@ import Post from './Post';
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
+  const [input, setInput] = useState('');
 
-  const sendPost = (e) => {
+  useEffect(() => {
+    const q = query(collection(db, 'posts'), orderBy('timestamp', 'desc'));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      setPosts(snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })));
+    });
+    return unsubscribe;
+  }, []);
+
+  const sendPost = async (e) => {
     e.preventDefault();
+    const commentsDocRef = doc(db, 'posts', `Post${Date.now()}`);
+    const payload = {
+      timestamp: firebase.firestore.Timestamp.now(),
+      description: 'This is a test',
+      name: 'debangi',
+      message: input,
+      photoUrl: '',
+    };
+    setInput('');
+    await setDoc(commentsDocRef, payload);
   };
 
   return (
@@ -21,7 +50,11 @@ const Feed = () => {
         <div className='feed__input'>
           <CreateIcon />
           <form>
-            <input type='text' />
+            <input
+              type='text'
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+            />
             <button onClick={sendPost} type='submit'>
               Send
             </button>
@@ -38,20 +71,15 @@ const Feed = () => {
           />
         </div>
       </div>
-      {posts.map((post) => (
+      {posts.map(({ id, data: { name, description, message, photoUrl } }) => (
         <Post
-          name='debangi'
-          description='test'
-          message='jjkjsjsdidiu'
-          photoUrl=''
+          key={id}
+          name={name}
+          description={description}
+          message={message}
+          photoUrl={photoUrl}
         />
       ))}
-      <Post
-        name='debangi'
-        description='test'
-        message='jjkjsjsdidiu'
-        photoUrl=''
-      />
     </div>
   );
 };
