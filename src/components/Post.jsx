@@ -7,11 +7,11 @@ import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import './Post.css';
 
-const Post = ({ name, description, message, photoUrl }) => {
+const Post = ({ name, description, message, photoURL }) => {
   return (
     <div className='post'>
       <div className='post__header'>
-        <Avatar />
+        <Avatar src={photoURL}>{name[0].toUpperCase()}</Avatar>
         <div className='post__info'>
           <h2>{name}</h2>
           <p>{description}</p>

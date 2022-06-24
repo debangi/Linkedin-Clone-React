@@ -17,8 +17,12 @@ import ArticleIcon from '@mui/icons-material/Article';
 import './Feed.css';
 import InputOption from './InputOption';
 import Post from './Post';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../features/userSlice';
 
 const Feed = () => {
+  const user = useSelector(selectUser);
+
   const [posts, setPosts] = useState([]);
   const [input, setInput] = useState('');
 
@@ -34,11 +38,11 @@ const Feed = () => {
     e.preventDefault();
     const commentsDocRef = doc(db, 'posts', `Post${Date.now()}`);
     const payload = {
-      timestamp: firebase.firestore.Timestamp.now(),
-      description: 'This is a test',
-      name: 'debangi',
+      name: user.displayName,
+      description: user.email,
       message: input,
-      photoUrl: '',
+      photoURL: user.photoURL || '',
+      timestamp: firebase.firestore.Timestamp.now(),
     };
     setInput('');
     await setDoc(commentsDocRef, payload);
@@ -71,13 +75,13 @@ const Feed = () => {
           />
         </div>
       </div>
-      {posts.map(({ id, data: { name, description, message, photoUrl } }) => (
+      {posts.map(({ id, data: { name, description, message, photoURL } }) => (
         <Post
           key={id}
           name={name}
           description={description}
           message={message}
-          photoUrl={photoUrl}
+          photoURL={photoURL}
         />
       ))}
     </div>
