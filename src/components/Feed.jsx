@@ -23,7 +23,7 @@ import FlipMove from 'react-flip-move';
 
 const Feed = () => {
   const user = useSelector(selectUser);
-
+  console.log(user);
   const [posts, setPosts] = useState([]);
   const [input, setInput] = useState('');
 
@@ -48,7 +48,7 @@ const Feed = () => {
     setInput('');
     await setDoc(commentsDocRef, payload);
   };
-
+  console.log(posts);
   return (
     <div className='feed'>
       <div className='feed__inputContainer'>

@@ -4,11 +4,11 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from 'firebase/auth';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { auth } from '../firebase-config';
 import './Login.css';
-import { login } from '../features/userSlice';
+import { login, selectUser } from '../features/userSlice';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -46,7 +46,6 @@ const Login = () => {
       setEmail('');
       setPassword('');
       setProfilePic('');
-      console.log(userAuth);
     } catch (e) {
       console.log(e.message);
     }
@@ -71,7 +70,6 @@ const Login = () => {
       console.log(e.message);
     }
   };
-
   return (
     <div className='login'>
       <img src='' alt='logo' />
